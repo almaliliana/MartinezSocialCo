@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Martinez Social Co. — Social Media for Wedding Photographers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --cream-dark: #EDE7D9;
+    --warm-white: #FDFAF5;
+    --black: #1A1612;
+    --muted: #6B6057;
+    --rose: #B5856A;
+    --border: rgba(26,22,18,0.1);
+    --border-strong: rgba(26,22,18,0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--black);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.1rem 3rem;
+    background: rgba(245,240,232,0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--black); text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--black); }
+
+  .nav-cta {
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.55rem 1.4rem;
+    border: 0.5px solid var(--black);
+    color: var(--black); text-decoration: none;
+    transition: all 0.2s;
+  }
+  .nav-cta:hover { background: var(--black); color: var(--cream); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 62px;
+  }
+
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 3rem 5rem 4rem;
+  }
+
+  .hero-tag {
+    font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 1.8rem;
+  }
+
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+    font-weight: 400; line-height: 1.05;
+    color: var(--black); margin-bottom: 1.8rem;
+  }
+  .hero-headline em { font-style: italic; }
+
+  .hero-sub {
+    font-size: 1rem; color: var(--muted); font-weight: 300;
+    max-width: 400px; margin-bottom: 2.5rem; line-height: 1.85;
+  }
+
+  .btn-dark {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: var(--black); color: var(--cream);
+    text-decoration: none; font-size: 0.72rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    transition: background 0.2s; align-self: flex-start;
+  }
+  .btn-dark:hover { background: var(--rose); }
+
+  .hero-right {
+    position: relative; background: var(--cream-dark);
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Film-style photo collage */
+  .film-stack {
+    position: relative; width: 80%; aspect-ratio: 3/4;
+  }
+
+  .film-main {
+    width: 100%; height: 100%;
+    background: #2a2420;
+    display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 1.8rem;
+    position: relative; overflow: hidden;
+  }
+
+  .film-main::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.45) 100%);
+  }
+
+  .film-main-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem; font-style: italic;
+    color: rgba(255,255,255,0.7); position: relative; z-index: 1;
+    letter-spacing: 0.04em;
+  }
+
+  .film-accent {
+    position: absolute; bottom: -1.5rem; left: -2rem;
+    width: 48%; aspect-ratio: 2/3;
+    background: #3d3028;
+    border: 3px solid var(--cream);
+  }
+
+  /* Stat pill */
+  .stat-pill {
+    position: absolute; top: 3rem; right: -2rem;
+    background: var(--warm-white);
+    border: 0.5px solid var(--border-strong);
+    padding: 1.3rem 1.8rem;
+    min-width: 180px;
+  }
+  .stat-pill .big { 
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem; font-weight: 400; line-height: 1;
+    color: var(--rose); display: block;
+  }
+  .stat-pill .label {
+    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); margin-top: 0.4rem; display: block;
+  }
+
+  /* ── ABOUT ── */
+  .about-section {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 80vh;
+  }
+
+  .about-photo {
+    background: #2C2420;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 500px;
+  }
+
+  .about-photo-inner {
+    width: 60%; aspect-ratio: 3/4;
+    background: #3d3028;
+    border: 2px solid rgba(255,255,255,0.15);
+    display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 1.2rem;
+  }
+
+  .about-photo-label {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 0.78rem;
+    color: rgba(255,255,255,0.5); letter-spacing: 0.06em;
+  }
+
+  .about-content {
+    background: var(--black);
+    padding: 5rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .about-eyebrow {
+    font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 1.5rem;
+  }
+
+  .about-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400; line-height: 1.15;
+    color: var(--warm-white); margin-bottom: 2rem;
+  }
+  .about-headline em { font-style: italic; color: var(--rose); }
+
+  .about-body {
+    color: rgba(253,250,245,0.6);
+    font-size: 0.95rem; line-height: 1.9; font-weight: 300;
+  }
+  .about-body p + p { margin-top: 1rem; }
+  .about-body strong { color: rgba(253,250,245,0.9); font-weight: 400; }
+
+  .about-details {
+    margin-top: 2.5rem;
+    display: flex; gap: 3rem;
+    border-top: 0.5px solid rgba(253,250,245,0.1);
+    padding-top: 2rem;
+  }
+
+  .detail-group label {
+    font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--rose); display: block; margin-bottom: 0.4rem;
+  }
+
+  .detail-group p {
+    font-size: 0.85rem; color: rgba(253,250,245,0.7); font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* ── CASE STUDY ── */
+  .case-study {
+    background: var(--warm-white);
+    padding: 6rem 4rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+  }
+
+  .case-left .eyebrow {
+    font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 1.2rem;
+  }
+
+  .case-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 400; line-height: 1.15;
+    color: var(--black); margin-bottom: 1.5rem;
+  }
+  .case-headline em { font-style: italic; }
+
+  .case-body {
+    font-size: 0.92rem; color: var(--muted);
+    font-weight: 300; line-height: 1.85;
+    margin-bottom: 2rem;
+  }
+
+  .case-meta {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    border-top: 0.5px solid var(--border);
+    padding-top: 1.5rem;
+  }
+
+  .meta-item label {
+    font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--rose); display: block; margin-bottom: 0.25rem;
+  }
+  .meta-item p { font-size: 0.85rem; color: var(--muted); font-weight: 300; }
+
+  .case-stats {
+    display: flex; flex-direction: column; gap: 1px;
+    background: var(--border);
+  }
+
+  .case-stat-card {
+    background: var(--warm-white);
+    padding: 2.5rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+
+  .case-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 400;
+    color: var(--black); line-height: 1; display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .case-stat-label {
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .case-stat-card:first-child { background: var(--black); }
+  .case-stat-card:first-child .case-stat-num { color: var(--rose); }
+  .case-stat-card:first-child .case-stat-label { color: rgba(253,250,245,0.5); }
+
+  /* ── WHO ── */
+  .who-section { padding: 6rem 4rem; }
+
+  .who-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start;
+  }
+
+  .eyebrow {
+    font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 1.2rem;
+  }
+
+  .section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400; line-height: 1.15;
+    color: var(--black); margin-bottom: 2rem;
+  }
+  .section-heading em { font-style: italic; }
+
+  .check-list { list-style: none; display: flex; flex-direction: column; gap: 1.1rem; }
+  .check-list li {
+    display: flex; gap: 1rem; align-items: flex-start;
+    font-size: 0.92rem; color: var(--muted); font-weight: 300; line-height: 1.6;
+  }
+  .check-list li::before {
+    content: ''; display: block; flex-shrink: 0;
+    width: 18px; height: 1px;
+    background: var(--rose); margin-top: 0.65rem;
+  }
+
+  .why-cards { display: flex; flex-direction: column; padding-top: 3.8rem; }
+  .why-card { border-top: 0.5px solid var(--border); padding: 1.4rem 0; }
+  .why-card:last-child { border-bottom: 0.5px solid var(--border); }
+  .why-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 400; margin-bottom: 0.4rem;
+  }
+  .why-card p { font-size: 0.85rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
+
+  /* ── PACKAGES ── */
+  .packages-section { background: var(--cream-dark); padding: 6rem 4rem; }
+  .packages-header { text-align: center; margin-bottom: 4rem; }
+
+  .packages-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border-strong);
+    max-width: 1100px; margin: 0 auto;
+    border: 0.5px solid var(--border-strong);
+  }
+
+  .pkg {
+    background: var(--cream); padding: 2.8rem 2.2rem;
+    position: relative; transition: background 0.2s;
+  }
+  .pkg:hover { background: var(--warm-white); }
+  .pkg.featured { background: var(--black); }
+  .pkg.featured:hover { background: #2a2420; }
+
+  .pkg-badge {
+    position: absolute; top: 0; left: 2.2rem;
+    background: var(--rose); color: white;
+    font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.28rem 0.75rem;
+  }
+
+  .pkg-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 400; font-style: italic;
+    color: var(--border-strong); line-height: 1; display: block;
+    margin-bottom: 0.3rem;
+  }
+  .pkg.featured .pkg-num { color: rgba(253,250,245,0.15); }
+
+  .pkg-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 400;
+    color: var(--black); display: block; margin-bottom: 0.3rem;
+  }
+  .pkg.featured .pkg-name { color: var(--warm-white); }
+
+  .pkg-price-wrap { margin: 1.2rem 0; }
+  .pkg-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem; font-weight: 400;
+    color: var(--black); line-height: 1; display: block;
+  }
+  .pkg.featured .pkg-price { color: var(--rose); }
+
+  .pkg-per {
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .pkg.featured .pkg-per { color: rgba(253,250,245,0.4); }
+
+  .pkg-divider {
+    height: 0.5px; background: var(--border);
+    margin: 1.2rem 0;
+  }
+  .pkg.featured .pkg-divider { background: rgba(253,250,245,0.1); }
+
+  .pkg-desc {
+    font-size: 0.83rem; color: var(--muted);
+    font-weight: 300; line-height: 1.75; min-height: 70px;
+  }
+  .pkg.featured .pkg-desc { color: rgba(253,250,245,0.55); }
+
+  .pkg-includes {
+    font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--rose); display: block; margin-bottom: 0.9rem;
+  }
+
+  .pkg-items { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 2rem; }
+  .pkg-item {
+    font-size: 0.82rem; color: var(--muted); font-weight: 300;
+    display: flex; gap: 0.7rem; align-items: flex-start;
+  }
+  .pkg.featured .pkg-item { color: rgba(253,250,245,0.6); }
+  .pkg-item::before {
+    content: ''; display: block; flex-shrink: 0;
+    width: 12px; height: 1px;
+    background: var(--rose); margin-top: 0.62rem;
+  }
+
+  .pkg-cta {
+    display: block; text-align: center;
+    padding: 0.85rem;
+    border: 0.5px solid var(--black);
+    color: var(--black); text-decoration: none;
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .pkg-cta:hover { background: var(--black); color: var(--cream); }
+  .pkg.featured .pkg-cta {
+    background: var(--rose); border-color: var(--rose); color: white;
+  }
+  .pkg.featured .pkg-cta:hover { background: #9d7060; border-color: #9d7060; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-section { padding: 6rem 4rem; background: var(--warm-white); }
+  .testimonials-header { text-align: center; margin-bottom: 4rem; }
+
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem; max-width: 1000px; margin: 0 auto;
+  }
+
+  .testimonial-card {
+    border: 0.5px solid var(--border);
+    padding: 2.2rem;
+    background: var(--warm-white);
+    position: relative;
+  }
+
+  .testimonial-card::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem; line-height: 1;
+    color: var(--rose); opacity: 0.3;
+    position: absolute; top: 1rem; left: 1.8rem;
+  }
+
+  .testimonial-text {
+    font-size: 0.88rem; color: var(--muted);
+    font-weight: 300; line-height: 1.85;
+    margin-bottom: 1.5rem; padding-top: 1.5rem;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    border-top: 0.5px solid var(--border); padding-top: 1rem;
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--black);
+  }
+
+  /* ── PROCESS ── */
+  .process-section { padding: 6rem 4rem; }
+  .process-header { text-align: center; margin-bottom: 4rem; }
+
+  .process-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    max-width: 1000px; margin: 0 auto;
+    position: relative;
+  }
+  .process-steps::before {
+    content: ''; position: absolute;
+    top: 22px; left: 12.5%; right: 12.5%;
+    height: 0.5px; background: var(--border);
+  }
+
+  .process-step { padding: 0 1.5rem; text-align: center; }
+
+  .step-circle {
+    width: 44px; height: 44px;
+    border: 0.5px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem; font-style: italic;
+    color: var(--rose); background: var(--cream);
+    position: relative; z-index: 1;
+  }
+
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 400; margin-bottom: 0.5rem;
+  }
+  .step-desc { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+
+  /* ── FAQ ── */
+  .faq-section { padding: 5rem 4rem; max-width: 760px; margin: 0 auto; }
+  .faq-header { text-align: center; margin-bottom: 3rem; }
+
+  .faq-item { border-top: 0.5px solid var(--border); }
+  .faq-item:last-child { border-bottom: 0.5px solid var(--border); }
+
+  .faq-q {
+    width: 100%; background: none; border: none; cursor: pointer;
+    padding: 1.4rem 0;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 400; font-style: italic;
+    color: var(--black); text-align: left; gap: 1rem;
+  }
+  .faq-arrow { font-size: 1.2rem; color: var(--rose); transition: transform 0.25s; flex-shrink: 0; font-style: normal; font-family: 'Jost', sans-serif; }
+  .faq-q.open .faq-arrow { transform: rotate(45deg); }
+
+  .faq-a {
+    font-size: 0.88rem; color: var(--muted);
+    font-weight: 300; line-height: 1.85;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s;
+  }
+  .faq-a.open { max-height: 240px; padding-bottom: 1.5rem; }
+
+  /* ── CTA / CONTACT ── */
+  .cta-section {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 60vh;
+  }
+
+  .cta-photo {
+    background: #1A1612; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 400px;
+  }
+
+  .cta-photo-inner {
+    width: 65%; aspect-ratio: 2/3;
+    background: #2d2620;
+    display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 1rem;
+  }
+  .cta-photo-inner p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 0.78rem;
+    color: rgba(255,255,255,0.35); letter-spacing: 0.06em;
+  }
+
+  .cta-content {
+    background: var(--black);
+    padding: 5rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .cta-content .eyebrow { color: var(--rose); margin-bottom: 1.5rem; }
+
+  .cta-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 400; line-height: 1.1;
+    color: var(--warm-white); margin-bottom: 1.2rem;
+  }
+  .cta-headline em { font-style: italic; color: var(--rose); }
+
+  .cta-sub {
+    font-size: 0.92rem; color: rgba(253,250,245,0.55);
+    font-weight: 300; line-height: 1.8; margin-bottom: 2.5rem;
+  }
+
+  .contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
+
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    text-decoration: none; group: true;
+  }
+
+  .contact-link-label {
+    font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--rose); min-width: 72px;
+  }
+
+  .contact-link-value {
+    font-size: 0.92rem; color: rgba(253,250,245,0.7); font-weight: 300;
+    border-bottom: 0.5px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .contact-link:hover .contact-link-value {
+    color: var(--warm-white); border-color: var(--rose);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 1.8rem 4rem;
+    border-top: 0.5px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.7rem; color: var(--muted);
+    background: var(--cream);
+  }
+
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--rose); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Martinez Social Co.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Social media management for wedding photographers</p>
+    <h1 class="hero-headline">Your work<br>deserves<br>to <em>be seen.</em></h1>
+    <p class="hero-sub">Done-for-you social media management built for wedding photographers. You capture love stories — I'll make sure the world sees them.</p>
+    <a href="#packages" class="btn-dark">See the packages</a>
+  </div>
+  <div class="hero-right">
+    <div class="film-stack">
+      <div class="film-main">
+        <p class="film-main-label">[ your favourite wedding image ]</p>
+      </div>
+      <div class="film-accent"></div>
+    </div>
+    <div class="stat-pill">
+      <span class="big">37K+</span>
+      <span class="label">followers grown for one client in 12 months</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-photo">
+    <div class="about-photo-inner">
+      <p class="about-photo-label">[ your photo here ]</p>
+    </div>
+  </div>
+  <div class="about-content">
+    <p class="about-eyebrow">Hi, I'm Lily</p>
+    <h2 class="about-headline">I turn stunning<br>photography into<br><em>powerful marketing.</em></h2>
+    <div class="about-body">
+      <p>I'm a remote social media strategist specialising in helping wedding photographers elevate their online presence, attract dream clients, and showcase their artistry. I craft tailored social media plans that turn your portfolio into a booking machine.</p>
+      <p>With <strong>over five years of experience</strong> in digital storytelling and content strategy, I've worked with photographers worldwide — from Atlanta to Dublin — to create high-impact, results-driven strategies. I understand the wedding industry deeply, and I know what it takes to convert beautiful images into real enquiries.</p>
+    </div>
+    <div class="about-details">
+      <div class="detail-group">
+        <label>Based between</label>
+        <p>Atlanta, GA<br>Dublin, Ireland</p>
+      </div>
+      <div class="detail-group">
+        <label>Languages</label>
+        <p>English (native)<br>Spanish (native)</p>
+      </div>
+      <div class="detail-group">
+        <label>Speciality</label>
+        <p>Wedding<br>photographers</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section class="case-study">
+  <div class="case-left">
+    <p class="eyebrow">Results that speak</p>
+    <h2 class="case-headline">From 1,200 to<br><em>37,000+ followers</em><br>in 12 months.</h2>
+    <p class="case-body">Through consistent, high-quality content, strategic engagement, and data-driven adjustments, I helped a wedding photographer build a strong, loyal audience and achieve massive organic growth — entirely organic, no paid ads.</p>
+    <div class="case-meta">
+      <div class="meta-item"><label>Industry</label><p>Wedding photography</p></div>
+      <div class="meta-item"><label>Platform</label><p>Instagram</p></div>
+      <div class="meta-item"><label>Service</label><p>Full social media management</p></div>
+      <div class="meta-item"><label>Year</label><p>2024</p></div>
+    </div>
+    <p style="font-size:0.7rem; color: var(--muted); margin-top: 1rem; font-style: italic;">*Results vary from account to account</p>
+  </div>
+  <div class="case-stats">
+    <div class="case-stat-card">
+      <span class="case-stat-num">37K+</span>
+      <span class="case-stat-label">Followers gained</span>
+    </div>
+    <div class="case-stat-card">
+      <span class="case-stat-num">3.1M</span>
+      <span class="case-stat-label">Accounts reached</span>
+    </div>
+    <div class="case-stat-card">
+      <span class="case-stat-num">+791%</span>
+      <span class="case-stat-label">Follower growth rate</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="who-section">
+  <div class="who-inner">
+    <div>
+      <p class="eyebrow">Is this for you?</p>
+      <h2 class="section-heading">For photographers<br>who feel <em>behind</em><br>on social</h2>
+      <ul class="check-list">
+        <li>You're too busy shooting and editing to post consistently</li>
+        <li>Your feed doesn't reflect how stunning your work actually is</li>
+        <li>You're getting followers but not enquiries</li>
+        <li>You've tried posting yourself but it never sticks</li>
+        <li>You want someone who truly understands the wedding world — not just "content"</li>
+      </ul>
+    </div>
+    <div class="why-cards">
+      <p class="eyebrow">Why it works</p>
+      <div class="why-card">
+        <h4>Deep industry knowledge</h4>
+        <p>Your content is crafted to attract couples booking 12–18 months out, in your market, for your aesthetic.</p>
+      </div>
+      <div class="why-card">
+        <h4>Captions that sound like you</h4>
+        <p>I study your voice, your vibe, and how you talk to clients. Every word feels authentic — because it's built around you.</p>
+      </div>
+      <div class="why-card">
+        <h4>Send galleries. That's it.</h4>
+        <p>Image selection, captions, scheduling, engagement — all handled. You focus on the weddings.</p>
+      </div>
+      <div class="why-card">
+        <h4>One person, your account</h4>
+        <p>You work directly with me, Lily. No handoffs, no junior staff, no one catching up on your brand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="packages-section" id="packages">
+  <div class="packages-header">
+    <p class="eyebrow">Investment</p>
+    <h2 class="section-heading">Choose your level of support</h2>
+  </div>
+  <div class="packages-grid">
+
+    <div class="pkg">
+      <span class="pkg-num">01</span>
+      <span class="pkg-name">The Portfolio Push</span>
+      <div class="pkg-price-wrap">
+        <span class="pkg-price">$697</span>
+        <span class="pkg-per">per month</span>
+      </div>
+      <div class="pkg-divider"></div>
+      <p class="pkg-desc">You've got a stunning portfolio and zero time to post it. I'll turn your galleries into a consistent, polished presence that keeps you visible and bookable.</p>
+      <div class="pkg-divider"></div>
+      <span class="pkg-includes">What's included</span>
+      <ul class="pkg-items">
+        <li>4 portfolio Reels per month</li>
+        <li>6 static or carousel posts</li>
+        <li>Image selection from your galleries</li>
+        <li>Reposted to Facebook &amp; TikTok</li>
+        <li>2 hrs community management</li>
+        <li>Bi-weekly strategy calls</li>
+        <li>Dedicated account manager</li>
+      </ul>
+      <a href="#contact" class="pkg-cta">Get started</a>
+    </div>
+
+    <div class="pkg featured">
+      <div class="pkg-badge">Most popular</div>
+      <span class="pkg-num">02</span>
+      <span class="pkg-name">The Brand Builder</span>
+      <div class="pkg-price-wrap">
+        <span class="pkg-price">$997</span>
+        <span class="pkg-per">per month</span>
+      </div>
+      <div class="pkg-divider"></div>
+      <p class="pkg-desc">Portfolio work plus personality. Your gallery highlights blended with behind-the-scenes and trending content — building a brand couples remember and book.</p>
+      <div class="pkg-divider"></div>
+      <span class="pkg-includes">What's included</span>
+      <ul class="pkg-items">
+        <li>6 Reels (3 portfolio + 3 brand-building)</li>
+        <li>6 static or carousel posts</li>
+        <li>Image selection from your galleries</li>
+        <li>Reposted to Facebook &amp; TikTok</li>
+        <li>2 hrs community management</li>
+        <li>Bi-weekly strategy calls</li>
+        <li>Dedicated account manager</li>
+      </ul>
+      <a href="#contact" class="pkg-cta">Get started</a>
+    </div>
+
+    <div class="pkg">
+      <span class="pkg-num">03</span>
+      <span class="pkg-name">The Full Picture</span>
+      <div class="pkg-price-wrap">
+        <span class="pkg-price">$1,497</span>
+        <span class="pkg-per">per month</span>
+      </div>
+      <div class="pkg-divider"></div>
+      <p class="pkg-desc">All in. Strategic, personality-packed social media that positions you as the go-to photographer in your area. For those ready to grow boldly and book consistently.</p>
+      <div class="pkg-divider"></div>
+      <span class="pkg-includes">What's included</span>
+      <ul class="pkg-items">
+        <li>8 Reels (any mix of content types)</li>
+        <li>8 static or carousel posts</li>
+        <li>Image selection from your galleries</li>
+        <li>Reposted to Facebook &amp; TikTok</li>
+        <li>3 hrs community management</li>
+        <li>Weekly Loom check-ins + strategy calls</li>
+        <li>Marketing plan &amp; funnel support</li>
+        <li>Dedicated account manager</li>
+      </ul>
+      <a href="#contact" class="pkg-cta">Get started</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="testimonials">
+  <div class="testimonials-header">
+    <p class="eyebrow">Kind words</p>
+    <h2 class="section-heading">What photographers say</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <p class="testimonial-text">Lily brought my brand to life with beautifully designed posts, strategic captions, and a cohesive aesthetic that truly reflects my work. Now, my page feels like a high-end magazine, and my inquiries have doubled.</p>
+      <p class="testimonial-author">James M. — Dublin Based Wedding Photographer</p>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">Within just a few months, my engagement skyrocketed and I started booking more weddings directly from Instagram. Her strategy is thoughtful, personalized, and results-driven — I can't recommend her enough.</p>
+      <p class="testimonial-author">Emma R. — Destination Wedding Photographer</p>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">Lily set up my entire Pinterest strategy, optimised my boards, and within months my website traffic tripled. Now I'm getting inquiries from brides who found me through Pinterest — something I never thought possible.</p>
+      <p class="testimonial-author">Mark F. — Documentary-Style Wedding Photographer</p>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">Before working with Lily, I was drowning in social media tasks — posting inconsistently, struggling with captions. She took over everything and made my life so much easier. Now I can focus on shooting weddings.</p>
+      <p class="testimonial-author">Sophia L. — Luxury Wedding Photographer</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="process">
+  <div class="process-header">
+    <p class="eyebrow">How it works</p>
+    <h2 class="section-heading">Simple. Organised. <em>Stress-free.</em></h2>
+  </div>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-circle">01</div>
+      <h4 class="step-title">Reach out</h4>
+      <p class="step-desc">Drop me an email — we'll chat about your goals, style, and whether we're a good fit.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-circle">02</div>
+      <h4 class="step-title">Onboarding</h4>
+      <p class="step-desc">I set up your content hub and we plan your first full month together.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-circle">03</div>
+      <h4 class="step-title">Review &amp; approve</h4>
+      <p class="step-desc">You review all content before anything goes live. Your approval, always.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-circle">04</div>
+      <h4 class="step-title">We go live</h4>
+      <p class="step-desc">I post, engage, and report. You shoot beautiful weddings.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="faq-header">
+    <p class="eyebrow">Questions</p>
+    <h2 class="section-heading">The ones I get <em>most often</em></h2>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Will this take a lot of my time? <span class="faq-arrow">+</span></button>
+    <div class="faq-a">No — your job is to send galleries. That's genuinely it. I handle image selection, caption writing, scheduling, and engagement. You'll have regular calls to stay in the loop, but this is designed to give you time back, not take it.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Will the captions sound like me? <span class="faq-arrow">+</span></button>
+    <div class="faq-a">That's one of my top priorities. During onboarding I spend real time understanding your voice, your values, and how you talk to clients. Every caption is checked before it reaches you, and you can always request edits.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Do I need to sort through my own galleries? <span class="faq-arrow">+</span></button>
+    <div class="faq-a">Nope. Send me the full gallery and I'll pull the images. You'll have final approval over what gets posted, but the selecting and sorting is completely on me.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Do I need to come up with content ideas? <span class="faq-arrow">+</span></button>
+    <div class="faq-a">Not unless you want to. Part of what I do is bring a full content plan to each strategy call — you pick what resonates and I build it. If you have ideas, great. But you're not required to come in with a list.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Which platforms do you manage? <span class="faq-arrow">+</span></button>
+    <div class="faq-a">All packages include Instagram as the primary platform, with reposts to Facebook and TikTok. TikTok-native content built specifically for the platform is available as an add-on.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Is there a minimum commitment? <span class="faq-arrow">+</span></button>
+    <div class="faq-a">Yes — all packages start with a 3-month commitment. Social media growth takes time, and I want to make sure we have enough runway to move the needle for your business. After the initial term we go month-to-month.</div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta-section" id="contact">
+  <div class="cta-photo">
+    <div class="cta-photo-inner">
+      <p>[ wedding photo ]</p>
+    </div>
+  </div>
+  <div class="cta-content">
+    <p class="eyebrow">Let's work together</p>
+    <h2 class="cta-headline">Ready to get your<br>work in front of<br><em>your people?</em></h2>
+    <p class="cta-sub">Send me an email and I'll get back to you within 48 hours. No pressure, no pitch — just a conversation about your business.</p>
+    <div class="contact-links">
+      <a href="mailto:thelilymartinez@gmail.com" class="contact-link">
+        <span class="contact-link-label">Email</span>
+        <span class="contact-link-value">thelilymartinez@gmail.com</span>
+      </a>
+      <a href="https://instagram.com/almalilliana" class="contact-link">
+        <span class="contact-link-label">Instagram</span>
+        <span class="contact-link-value">@almalilliana</span>
+      </a>
+      <a href="https://linkedin.com/in/almalilliana" class="contact-link">
+        <span class="contact-link-label">LinkedIn</span>
+        <span class="contact-link-value">@almalilliana</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Martinez Social Co. — Social media for wedding photographers</span>
+  <span>Atlanta, GA &amp; Dublin, Ireland</span>
+</footer>
+
+<script>
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-q').forEach(b => b.classList.remove('open'));
+  if (!isOpen) { answer.classList.add('open'); btn.classList.add('open'); }
+}
+</script>
+
+</body>
+</html>
